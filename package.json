@@ -2,7 +2,7 @@
 	"name": "vscode-sf",
 	"displayName": "Sami's VSCode Extension",
 	"description": "VSCode Extension tailored to yours truly's preferences.",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"engines": {
 		"vscode": "^1.45.0"
 	},
