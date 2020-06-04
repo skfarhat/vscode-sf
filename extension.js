@@ -8,6 +8,7 @@ let os = require('os')
 // Config values
 const notesDirectory = expandHomeDirectory(vscode.workspace.getConfiguration().get('sf.notesDirectory'))
 
+
 // ============================================================================
 // FUNCTIONS
 // ============================================================================
