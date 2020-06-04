@@ -10,7 +10,7 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:sf.openNote"
+		"*"
 	],
 	"main": "./extension.js",
 	"contributes": {
