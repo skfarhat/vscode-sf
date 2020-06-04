@@ -6,6 +6,11 @@
 	"engines": {
 		"vscode": "^1.45.0"
 	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/skfarhat/vscode-sf.git"
+	},
+	"publisher": "samif",
 	"categories": [
 		"Other"
 	],
