@@ -6,7 +6,10 @@ let fs = require("fs")
 let os = require('os')
 
 // Config values
-const notesDirectory = expandHomeDirectory(vscode.workspace.getConfiguration().get('sf.notesDirectory'))
+const configNoteDirs = vscode.workspace.getConfiguration().get('sf.noteDirectories')
+const noteDirs = configNoteDirs.map(expandHomeDirectory)
+
+var noteParents = {}
 
 
 // ============================================================================
@@ -38,40 +41,55 @@ function openFile(path) {
  * Returns a Promise which contains the list of files in the user-configured
  * notes directory.
  */
-function getNoteFiles() {
-	return new Promise((resolve, reject) => {
-		fs.readdir(notesDirectory, (err, data) => {
-			if (isSet(err) || !isSet(data)) {
-				const msg = `Could not open requested directory ${notesDirectory}`
-				vscode.window.showErrorMessage(msg)
-				reject(msg)
-			} else {
-				const ignoreRegex = /.git|.DS_Store/
-				const filteredFiles = data.filter(item => !item.match(ignoreRegex))
-				resolve(filteredFiles)
-			}
-		})
-	})
+function refreshNoteFiles() {
+  for (var i in noteDirs) {
+    // Remove trailing /
+	const noteDir = noteDirs[i].replace(/\/$/, '');
+    fs.readdir(noteDir, (err, data) => {
+      if (!isSet(err) && isSet(data)) {
+        const filteredNotes = data.filter(
+          (item) => !item.match(/.git|.DS_Store/)
+        )
+        for (var j in filteredNotes) {
+          const note = filteredNotes[j]
+          if (note in noteParents) {
+            // Note with similar name exists already
+			// show full path in.
+			// Replace previous one with adjusted one
+			const parent = noteParents[note]
+			noteParents[`${parent}/${note}`] = ''
+			delete noteParents[note]
+			// Next insert the current one
+			noteParents[`${noteDir}/${note}`] = ''
+          } else {
+            noteParents[note] = noteDir
+          }
+        }
+      }
+    })
+  }
 }
 
 /**
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "sf" is now active!')
+  refreshNoteFiles();
 
-	let openNoteCommand = vscode.commands.registerCommand('sf.openNote', function() {
-		vscode.window.showQuickPick(getNoteFiles(), {}).then(
-			selected => {
-				if (isSet(selected)) {
-					openFile(`${notesDirectory}/${selected}`)
-				}
-			}
-		)
-	})
-	context.subscriptions.push(openNoteCommand)
+  let openNoteCommand = vscode.commands.registerCommand(
+    "sf.openNote",
+    function () {
+      vscode.window
+        .showQuickPick(Object.keys(noteParents), {})
+        .then((selected) => {
+          if (isSet(selected)) {
+            const parent = noteParents[selected];
+            openFile(`${parent}/${selected}`);
+          }
+        });
+    }
+  );
+  context.subscriptions.push(openNoteCommand);
 }
 
 exports.activate = activate

@@ -30,10 +30,10 @@
 			"type": "object",
 			"title": "Sami's Extension",
 			"properties": {
-				"sf.notesDirectory": {
-					"type": "string",
+				"sf.noteDirectories": {
+					"type": "array",
 					"description": "Notes directory pathname",
-					"default": "~/d/dev/notes/"
+					"default": ["~/d/dev/notes/"]
 				}
 			}
 		}
