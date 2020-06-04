@@ -1,7 +1,7 @@
 {
-	"name": "vscode-ext",
-	"displayName": "vscode-ext",
-	"description": "",
+	"name": "vscode-sf",
+	"displayName": "Sami's VSCode Extension",
+	"description": "VSCode Extension tailored to yours truly's preferences.",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.45.0"
@@ -10,37 +10,27 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:vscode-ext.helloWorld",
-		"onCommand:vscode-ext.openNote"
+		"onCommand:sf.openNote"
 	],
 	"main": "./extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "vscode-ext.helloWorld",
-				"title": "Hello World"
-			},
-			{
-				"command": "vscode-ext.openNote",
+				"command": "sf.openNote",
 				"title": "Open Note"
 			}
 		],
 		"configuration": {
 			"type": "object",
-			"title": "Todo - Configuration",
+			"title": "Sami's Extension",
 			"properties": {
-			  "browsableFilenames": {
-				"type": "string",
-				"description": "Todo file name. Other supported names are: `*.todo`, `*.todos`, `*.task`, `*.tasks`, `*.taskpaper` and `todolist.txt`",
-				"default": "/Users/sami/d/dev/notes/current.md"
-			  },
-			  "sfext.notesDirectory": {
-				"type": "string",
-				"description": "Notes directory pathname",
-				"default": "/Users/sami/d/dev/notes/"
-			  }
+				"sf.notesDirectory": {
+					"type": "string",
+					"description": "Notes directory pathname",
+					"default": "~/d/dev/notes/"
+				}
 			}
-		  }
+		}
 	},
 	"scripts": {
 		"lint": "eslint .",
