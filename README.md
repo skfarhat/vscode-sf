@@ -1,4 +1,6 @@
-# vscode-sf README
+<img src="./images/sf-white.png" />
+
+# vscode-sf
 
 VSCode Extension tailored to yours truly's preferences.
 

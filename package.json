@@ -2,10 +2,11 @@
 	"name": "vscode-sf",
 	"displayName": "Sami's VSCode Extension",
 	"description": "VSCode Extension tailored to yours truly's preferences.",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"engines": {
 		"vscode": "^1.45.0"
 	},
+	"icon": "images/sf-white.png",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/skfarhat/vscode-sf.git"
